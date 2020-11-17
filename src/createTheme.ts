@@ -8,8 +8,14 @@ export const createTheme = <T = {}, U = {}>(theme?: T, modes?: { [key: string]: 
   const _theme = ((theme ? theme : baseTheme) as unknown) as any
   const _modes = ((modes ? modes : {}) as unknown) as { [key: string]: any }
 
-  const { colors, ...t } = _theme
+  const { colors, lineHeight, letterSpacings, fonts, fontSizes, ...t } = _theme
+
   const _colors = Object.assign(baseTheme.colors, colors)
+  const _fontKeys = Object.assign(baseTheme.fonts, fonts)
+  const _fontSizeKeys = Object.assign(baseTheme.fontSizes, fontSizes)
+  const _lineHeightKeys = Object.assign(baseTheme.lineHeights, lineHeight)
+  const _letterSpacings = Object.assign(baseTheme.letterSpacings, letterSpacings)
+
   const buildTheme = (Object.assign(baseTheme, {
     colors: _colors,
     ...t,
@@ -24,5 +30,9 @@ export const createTheme = <T = {}, U = {}>(theme?: T, modes?: { [key: string]: 
         ? Object.assign(_colors, ...Object.keys(modes).map((el) => _modes[el].colors))
         : _colors,
     ),
+    fontKeys: Object.keys(_fontKeys),
+    fontSizeKeys: Object.keys(_fontSizeKeys),
+    lineHeightKeys: Object.keys(_lineHeightKeys),
+    letterSpacings: Object.keys(_letterSpacings),
   }
 }
